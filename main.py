@@ -9,7 +9,7 @@ con = sqlite3.connect('db.db', check_same_thread=False)
 cur = con.cursor()
 
 cur.execute(f"""
-            CREATE TABLE NOT EXISTS items (
+            CREATE TABLE IF NOT EXISTS items (
 	            id INTEGER PRIMARY KEY,
 	            title TEXT NOT NULL,
 	            image BLOB,
@@ -55,7 +55,7 @@ async def get_image(items_id):
     image_bytes = cur.execute(f"""
                               SELECT image from items WHERE id={item_id}
                               """).fetchone()[0]
-    return Response(content=bytes.fromhex(image_bytes))
+    return Response(content=bytes.fromhex(image_bytes), media_type='image/jpeg')
 
 
 app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
