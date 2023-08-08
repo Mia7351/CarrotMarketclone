@@ -14,7 +14,6 @@ const handleSubmitForm = async (event) => {
   } catch (e) {
     console.error(e);
   }
-
   console.log("제출완료");
 };
 
